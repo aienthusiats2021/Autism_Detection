@@ -34,9 +34,13 @@ def refer():
     refer_sec5 = st.beta_expander("Image Validation", expanded=False)
     with refer_sec5:
         st.write("https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts-sdk/image-analysis-client-library?tabs=visual-studio&pivots=programming-language-python")
-        st.write("https://stackoverflow.com/questions/47120928/how-to-send-a-local-image-instead-of-url-to-microsoft-cognitive-vision-apianaly")
     
     st.write("                                ")
     refer_sec6 = st.beta_expander("Model Deployment", expanded=False)
     with refer_sec6:
         st.write("https://streamlit.io/sharing")
+    
+    st.write("                                ")
+    refer_sec7 = st.beta_expander("Images", expanded=False)
+    with refer_sec7:
+        st.write("https://www.pexels.com/")

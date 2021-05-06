@@ -22,8 +22,8 @@ def validation(upl_img):
     headers['Content-Type'] = 'application/octet-stream'
 
     # Set request querystring parameters
-    #params = {'visualFeatures': 'Color,Categories,Tags,Description,ImageType,Faces,Adult'}
-    params = {'visualFeatures': 'Faces'}
+    params = {'visualFeatures': 'Color,Categories,Tags,Description,ImageType,Faces,Adult'}
+    #params = {'visualFeatures': 'Description,Faces'}
 
     # Make request and process response
     response = requests.request('post', "https://{}.api.cognitive.microsoft.com/vision/v1.0/analyze".format(region), data=data, headers=headers, params=params)
@@ -48,4 +48,4 @@ def validation(upl_img):
         st.write("Error code: %d" % response.status_code)
         st.write("Message: %s" % response.json())
     
-    return img_ana_result
+    return img_ana_result, result

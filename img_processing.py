@@ -60,22 +60,39 @@ def processing():
             if up_file is not None:
                 up_image = Image.open(up_file)
                 image_url = st.image(up_image, caption='Uploaded Image', use_column_width=True)
-                img_validation = validation(up_file)
-                
-                # Validating the uploaded Image
+                                
+                # Validating, Analyzing and Printing Image characteristics
+                img_validation, result = validation(up_file)
+                st.subheader("Image characteristics")
+                if len(result['faces']) != 0:
+                    st.info("Age     : " + str(result['faces'][0]['age']) + '\n\n' +
+                            "Gender  : " + str(result['faces'][0]['gender']) + "\n\n" +
+                            "Caption : " + str(result['description']['captions'][0]['text']))
+                else:
+                    ani_predictions = []
+                    for i in result['tags']:
+                        ani_predictions.append([i['name'], "{:.2%}".format(i['confidence'])])
+                    st.info("The Image contents prediction and its percentage")
+                    st.warning(ani_predictions)
+                    st.info("Image caption: \n\n" + result['description']['captions'][0]['text'])
+
+                st.subheader("Image Validation Results")
                 if img_validation == 'passed':
                     st.info("Uploaded image validation completed and its passed the validation. \n"
                             "Now the prediction process begins ->->->->->->")
+                
+                    # Predicting and Printing the Image prediction results
                     pred_results, acc = predict(up_file)
-                    st.header("Prediction Results")
-                    st.info("Model has been predicted the uploaded child image as " + pred_results)
-                    st.write("                                ") 
-                    st.info("Accuracy of the above results are " + "{:.2%}".format(acc))
-                    st.write("                                ")
-                    st.write("                                ")
+                    st.subheader("Image Prediction Results")
+                    st.info("Model has been predicted the selected child image as " + pred_results + "\n\n" +
+                            "Accuracy of the above results are " + "{:.2%}".format(acc))
+                    if pred_results == 'Autistic':
+                        st.warning("Since the uploaded image has been predicted as an Autistic image, \
+                                    Please contact Heathcare Professional for further assistance")
                     
                     # Adding the user uploaded image to training set based on the predictions results
-                    app_data_discl = st.beta_expander("Data Usage Disclaimer", expanded=True)
+                    st.subheader("Image Usage")
+                    app_data_discl = st.beta_expander("Image Usage Disclaimer", expanded=True)
                     with app_data_discl:
                         st.warning("Are you giving concent to store your child's image for \
                                     future model tuning?")
@@ -89,15 +106,14 @@ def processing():
                         st.info("Thank you for providing the concent. Your child image has been stored \
                                  and it will be used for model training in future iterations.")
                     elif app_data_disc_sel_box == i_disagree:
-                        st.info("Thank you for using our AI application. Please contact a \
-                                 health care professional for further assistance.")
-                
+                        st.info("Thank you for using our AI application.")            
+                    
                 elif img_validation == 'failed':
                     st.error("Error: Image validation failed due to anyone of the following reasons. \n\n"
                                  "1. Image contains group of children. \n\n"
                                  "2. Its a image of a single adult or group of adult or group of children \
                                      and adults. \n\n"
-                                 "3. Image contains children aged more than 10. \n\n"
+                                 "3. Image contains children aged less than 3 or more than 10. \n\n"
                                  "4. Uploaded image is not a human facial image.\n\n"
                                  "5. Uploaded image is a blurred image.")                   
     elif app_disc_sel_box == i_disagree:

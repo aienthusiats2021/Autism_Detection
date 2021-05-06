@@ -2,13 +2,14 @@ import streamlit as st
 from intro import intro
 from img_processing import processing
 from references import refer
+from img_try_on import try_on
 
 if __name__ == '__main__':
 
     st.header('Autism Detection using Children Facial expression')
     st.sidebar.title('Options:')
     sidebar_selector = st.sidebar.radio('Use the Below Options',
-                                       ('About ASD', 'Autism Detection','References'))
+                                       ('About ASD', 'Try the App', 'Autism Detection App','References'))
     st.sidebar.header("Help:")
     st.sidebar.info("Please click the '+' sign to expand the sections.")
     st.sidebar.header("Authors:")
@@ -26,8 +27,12 @@ if __name__ == '__main__':
     if sidebar_selector == ('About ASD'):
         intro()
 
+    # Sample Image testing section
+    if sidebar_selector == ('Try the App'):
+        try_on()
+
     # Autism Detection section
-    if sidebar_selector == ('Autism Detection'):
+    if sidebar_selector == ('Autism Detection App'):
         processing()
     
     # Reference Section    

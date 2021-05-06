@@ -13,8 +13,6 @@ def tagging(pred_image, pred_tag):
     training_key = st.secrets["cust_vision_training_key"]
     project_id = st.secrets["cust_vision_project_id"]
     iteration_id = st.secrets["cust_vision_iteration_id"]
-    #prediction_key = "PASTE_YOUR_CUSTOM_VISION_PREDICTION_SUBSCRIPTION_KEY_HERE"
-    #prediction_resource_id = "PASTE_YOUR_CUSTOM_VISION_PREDICTION_RESOURCE_ID_HERE"
 
     credentials = ApiKeyCredentials(in_headers={"Training-key": training_key})
     trainer = CVTC(ENDPOINT, credentials)
@@ -27,10 +25,8 @@ def tagging(pred_image, pred_tag):
         print(i)
         if i.name == 'Non-Autistic':
             non_autistic_tag_id = i.id
-            print(non_autistic_tag_id)
         if i.name == 'Autistic':
             autistic_tag_id = i.id
-            print(autistic_tag_id)
 
     # converting the image to byte array
     image = Image.open(pred_image)
