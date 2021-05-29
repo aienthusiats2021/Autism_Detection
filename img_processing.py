@@ -29,7 +29,7 @@ def processing():
                      The application validates the uploaded image against the below specifications.\n\n"
                              
                         "* Single child's facial image. \n\n"
-                        "* Child should be aged less than 10 years. \n\n"
+                        "* Child should be aged greater than 3 and less than 10 years. \n\n"
                         "* Reject Images with group of children or adults. \n\n"
                         "* Reject Images of Adults. \n\n"
 
